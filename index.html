@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Một Năm Bên Em</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Dancing+Script:wght@500;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap">
+<style>
+/* Layout: cuốn nhật ký tình yêu về đêm — hero đếm ngày, 5 chương kỷ niệm (polaroid xen kẽ chữ), chương cuối tròn 1 năm, dải phim, thư tay, lý do, lời kết. Một giao diện tối có chủ đích. */
+:root{
+  --night:#22101c;
+  --night-2:#2f1727;
+  --rose:#f39bb3;
+  --pollen:#e8c483;
+  --ink:#f7e9ee;
+  --muted:#c9a9b7;
+  --paper:#fbf3f5;
+  --paper-ink:#5b2340;
+  --line:rgba(243,155,179,.22);
+  --scrim:rgba(18,6,14,.92);
+  --f-display:"Cormorant Garamond", "Times New Roman", serif;
+  --f-script:"Dancing Script", "Brush Script MT", cursive;
+  --f-body:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--ink);font-family:var(--f-body);font-weight:300;font-size:16px;line-height:1.7;overflow-x:hidden}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+section{padding-block:64px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pollen)}
+.script{font-family:var(--f-script);color:var(--rose)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--pollen);outline-offset:3px}
+
+/* Hero */
+.hero{padding-block:84px 48px;display:grid;gap:26px}
+.hero h1{font-size:clamp(3rem,9vw,6.4rem);letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--rose)}
+.hero .lede{max-width:36em;color:var(--muted);margin:0;font-size:1.05rem}
+.counters{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px 40px;border-top:1px solid var(--line);padding-top:20px}
+.counter-label{font-family:var(--f-display);font-style:italic;color:var(--muted);font-size:1.1rem;margin-bottom:6px}
+.counter{display:flex;flex-wrap:wrap;gap:6px 22px}
+.counter div{display:grid}
+.counter b{font-family:var(--f-display);font-weight:600;font-size:clamp(2rem,5.5vw,3.2rem);line-height:1;font-variant-numeric:tabular-nums}
+.counter div:first-child b{color:var(--rose)}
+.counter span{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.heart-btn{justify-self:start;font:inherit;font-weight:500;color:var(--night);background:var(--rose);border:0;border-radius:999px;padding:12px 24px;cursor:pointer;transition:transform .2s}
+.heart-btn:hover{transform:translateY(-2px)}
+
+/* Chapters */
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.88rem}
+.toc a:hover{border-color:var(--rose)}
+.chapter{padding-block:56px 16px}
+.chapter-head{display:grid;gap:6px;margin-bottom:40px;max-width:36em}
+.chapter-head h2{font-size:clamp(2.2rem,5.5vw,3.4rem)}
+.chapter-head h2 em{color:var(--rose)}
+.chapter-head p{margin:0;color:var(--muted)}
+
+.moment{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:24px 52px;align-items:center;padding-block:36px;border-top:1px solid var(--line)}
+.moment:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,260px)}
+.moment:nth-child(even) .stack{order:2}
+.moment .txt{display:grid;gap:6px;min-width:0;max-width:34em}
+.moment .when{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pollen);font-variant-numeric:tabular-nums}
+.moment h3{font-size:clamp(1.6rem,3.6vw,2.1rem)}
+.moment p{margin:0;color:var(--muted)}
+.moment.key h3{color:var(--rose)}
+
+.stack{position:relative;max-width:260px;width:100%}
+.stack.two{margin-bottom:34px}
+.polaroid{margin:0;background:var(--paper);padding:10px 10px 14px;border-radius:3px;box-shadow:0 16px 36px rgba(0,0,0,.45);transform:rotate(var(--r,0deg));transition:transform .35s;width:100%}
+.polaroid:hover{transform:rotate(0) scale(1.03);z-index:3}
+.stack .extra{position:absolute;width:56%;right:-10%;bottom:-34px;z-index:2}
+.photo{display:block;width:100%;aspect-ratio:4/5;max-width:100%;padding:0;border:0;background:linear-gradient(160deg,#f6d6df,#e9b9c8);overflow:hidden;cursor:zoom-in;position:relative}
+.photo img,.photo video{width:100%;height:100%;object-fit:cover;display:block}
+.photo .play{position:absolute;left:8px;bottom:8px;font:500 .72rem/1 var(--f-body);letter-spacing:.08em;color:var(--paper);background:rgba(34,16,28,.7);padding:6px 9px;border-radius:999px}
+.polaroid figcaption{font-family:var(--f-script);font-size:1.2rem;color:var(--paper-ink);text-align:center;padding-top:8px;line-height:1.2}
+.empty{display:grid;place-items:center;text-align:center;color:var(--paper-ink);font-family:var(--f-script);font-size:1.4rem;padding:18px;cursor:default}
+
+/* Final */
+.final{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px 56px;align-items:center}
+.final .stack{max-width:420px;justify-self:center}
+.final .photo{aspect-ratio:1/1}
+.final .txt{display:grid;gap:14px;max-width:32em}
+.final .txt p{margin:0;color:var(--muted);font-size:1.05rem}
+.final .big{font-family:var(--f-display);font-size:clamp(4rem,12vw,7.5rem);line-height:.9;color:var(--rose);font-variant-numeric:tabular-nums}
+
+/* Film strip */
+.film{overflow:hidden;margin-top:56px;border-block:1px solid var(--line);padding-block:18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.film-track{display:flex;gap:14px;width:max-content;animation:roll 70s linear infinite}
+.film:hover .film-track{animation-play-state:paused}
+.film button{padding:0;border:0;background:none;cursor:zoom-in;flex:none}
+.film img{height:150px;width:120px;object-fit:cover;display:block;border-radius:2px;filter:saturate(.9)}
+@keyframes roll{to{transform:translateX(-50%)}}
+
+/* Letter */
+.letter{background:var(--night-2);border:1px solid var(--line);border-radius:4px;padding:clamp(28px,6vw,64px);max-width:720px;margin:0 auto;position:relative}
+.letter .salute{font-family:var(--f-script);font-size:2.2rem;color:var(--rose);margin:0 0 18px}
+.letter p{margin:0 0 1.1em;max-width:62ch;font-size:1.06rem}
+.letter .sign{font-family:var(--f-script);font-size:1.9rem;color:var(--pollen);text-align:right;margin:24px 0 0}
+.stamp{position:absolute;top:22px;right:22px;font-family:var(--f-display);font-style:italic;font-size:.9rem;color:var(--pollen);border:1px dashed var(--pollen);padding:6px 10px;transform:rotate(6deg);opacity:.85}
+
+/* Reasons */
+.head{display:grid;gap:8px;margin-bottom:32px}
+.head h2{font-size:clamp(2.1rem,5vw,3.2rem)}
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.reason{font:inherit;text-align:left;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:4px;padding:22px;min-height:132px;cursor:pointer;display:grid;align-content:space-between;gap:12px;transition:background .25s,border-color .25s}
+.reason:hover{border-color:var(--rose)}
+.reason .n{font-family:var(--f-display);font-style:italic;font-size:1.1rem;color:var(--pollen)}
+.reason .front{font-family:var(--f-display);font-size:1.45rem;line-height:1.25}
+.reason .back{color:var(--muted);font-size:.95rem}
+.reason[aria-pressed="true"]{background:var(--night-2);border-color:var(--rose)}
+.hint{color:var(--muted);font-size:.85rem;margin-top:14px}
+
+/* Ending */
+.ending{text-align:center;padding-block:96px 120px;display:grid;gap:18px;justify-items:center}
+.ending h2{font-size:clamp(2.6rem,8vw,5rem)}
+.ending h2 em{color:var(--rose)}
+.ending p{color:var(--muted);max-width:30em;margin:0}
+.ending .heart-btn{justify-self:center}
+
+/* Music */
+.music{position:fixed;z-index:40;right:calc(16px + env(safe-area-inset-right, 0px));bottom:calc(16px + env(safe-area-inset-bottom, 0px));display:flex;align-items:center;gap:10px;font:500 .88rem var(--f-body);color:var(--ink);background:var(--night-2);border:1px solid var(--rose);border-radius:999px;padding:9px 16px 9px 12px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.music .bars{display:flex;align-items:flex-end;gap:2px;height:14px}
+.music .bars i{width:3px;height:4px;background:var(--rose);border-radius:1px}
+.music.on .bars i{animation:eq .9s ease-in-out infinite}
+.music.on .bars i:nth-child(2){animation-delay:.2s}.music.on .bars i:nth-child(3){animation-delay:.4s}
+.music .song{color:var(--muted);font-weight:300}
+@keyframes eq{0%,100%{height:4px}50%{height:14px}}
+@media (max-width:420px){.music .song{display:none}}
+@media (prefers-reduced-motion:reduce){.music.on .bars i{animation:none;height:10px}}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:50;background:var(--scrim);display:grid;place-items:center;padding:max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px))}
+.lightbox figure{margin:0;display:grid;gap:10px;justify-items:center;max-width:min(920px,100%)}
+.lightbox img,.lightbox video{max-width:100%;max-height:78vh;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lightbox figcaption{font-family:var(--f-script);font-size:1.6rem;color:var(--rose);text-align:center}
+.lb-close{position:absolute;top:calc(14px + env(safe-area-inset-top, 0px));right:calc(14px + env(safe-area-inset-right, 0px));font:500 .9rem var(--f-body);color:var(--ink);background:var(--night-2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+
+@media (max-width:640px){
+  .moment,.moment:nth-child(even),.final{grid-template-columns:1fr}
+  .moment:nth-child(even) .stack{order:0}
+  .moment .stack{max-width:250px;justify-self:center}
+  .stack .extra{right:-8%}
+  .stamp{position:static;display:inline-block;margin-bottom:16px}
+  .film img{height:120px;width:96px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto} .polaroid,.reason,.heart-btn{transition:none}
+  .film{overflow-x:auto} .film-track{animation:none}
+}
+</style>
+
+</head>
+<body>
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">20 · 10 · 2026 &nbsp;—&nbsp; ngày của Minh Nguyệt</span>
+    <h1>Một năm<br>bên <em>em</em>.</h1>
+    <p class="lede">Chúc mừng ngày Phụ nữ Việt Nam, cô gái của anh. Năm ngoái anh tặng em một trang web nhỏ xíu. Năm nay vẫn là một trang web, nhưng dài hơn nhiều, vì mình đã có cả một năm để kể.</p>
+    <div class="counters">
+      <div>
+        <div class="counter-label">Từ món quà 20/10 đầu tiên</div>
+        <div class="counter"><div><b id="d1">365</b><span>ngày</span></div><div><b id="h1">00</b><span>giờ</span></div><div><b id="m1">00</b><span>phút</span></div><div><b id="s1">00</b><span>giây</span></div></div>
+      </div>
+      <div>
+        <div class="counter-label">Từ ngày nói lời yêu, 14/11</div>
+        <div class="counter"><div><b id="d2">340</b><span>ngày</span></div><div><b id="h2">00</b><span>giờ</span></div><div><b id="m2">00</b><span>phút</span></div><div><b id="s2">00</b><span>giây</span></div></div>
+      </div>
+    </div>
+    <nav class="toc" aria-label="Các chương" id="toc"></nav>
+    <button class="heart-btn" id="burst" type="button">Thả tim cho anh ♥</button>
+  </header>
+
+  <div id="chapters"></div>
+
+  <section aria-labelledby="t-final" id="mot-nam">
+    <div class="chapter-head">
+      <span class="eyebrow">Chương cuối · 20 · 10 · 2026</span>
+      <h2 id="t-final">Tròn <em>một năm</em></h2>
+    </div>
+    <div class="final">
+      <div class="stack" id="final-photo"></div>
+      <div class="txt">
+        <span class="big"><span id="d3">365</span></span>
+        <p>Ba trăm sáu mươi lăm ngày, hai mươi kỷ niệm có tên, và còn rất nhiều ngày bình thường không ai chụp lại. Những ngày đó anh cũng nhớ hết.</p>
+        <p>Tối nay là một bữa nướng giản dị, một bó hoa, và hai bàn tay vẫn đan vào nhau như hôm ở Huế. Mình đứng ở cuối vòng đầu tiên. Vòng tiếp theo, anh vẫn muốn đi cùng em.</p>
+      </div>
+    </div>
+    <div class="film" aria-label="Một năm qua từng khung hình"><div class="film-track" id="film"></div></div>
+  </section>
+
+  <section aria-labelledby="t-letter">
+    <h2 id="t-letter" class="eyebrow" style="font-family:var(--f-body);font-size:.78rem;text-align:center;margin-bottom:24px">Thư tay gửi em</h2>
+    <article class="letter">
+      <span class="stamp">20.10</span>
+      <p class="salute">Gửi Minh Nguyệt của anh,</p>
+      <p>Một năm trước, anh lóng ngóng làm cho em một trang web nhỏ, kèm câu "hông có gì nhiều, chỉ một chút ít sự cute thui". Anh không nghĩ món quà đó lại mở ra cả một năm nhiều kỷ niệm đến vậy.</p>
+      <p>Mình đã có ngày 14/11 nói lời yêu ở Hội An, sinh nhật đầu tiên của em, những cuộc gọi video lúc yêu xa, những lần anh ra Huế nắm tay em, con đèo Hải Vân hai đứa cùng leo, cái Tết và Valentine đầu tiên có nhau. Rồi Vinpearl, núi Thần Tài, chuyến trốn ba mẹ ra Huế healing, và cả hôm anh ngồi cạnh em lúc em nhắm mắt chờ mũi tiêm.</p>
+      <p>Anh cũng nhớ những ngày không dễ dàng. Lúc anh mất việc, em vẫn ở đó, tựa vai anh ngắm hoàng hôn như chưa có gì xảy ra. Anh được ôm hoa đứng cạnh em trong ngày tốt nghiệp. Rồi em đeo thẻ nhân viên đầu tiên, xa nhà thử sức với công việc mới, dũng cảm hơn anh tưởng. Và một tháng mình sống chung, anh biết mình muốn những ngày như vậy thật lâu.</p>
+      <p>Cảm ơn em vì tất cả. Hôm nay là ngày của phụ nữ Việt Nam, nhưng với anh, ngày nào cũng là ngày của em. Chúc em luôn xinh đẹp, luôn vui, luôn được thương. Mình cùng viết tiếp năm thứ hai nhé.</p>
+      <p class="sign">Thương em, Hậu Đậu.</p>
+    </article>
+  </section>
+
+  <section aria-labelledby="t-reasons">
+    <div class="head">
+      <span class="eyebrow">Chạm để mở</span>
+      <h2 id="t-reasons">Vì sao anh thương em</h2>
+    </div>
+    <div class="reasons" id="reasons"></div>
+    <p class="hint">Mỗi thẻ là một lý do. Còn rất nhiều lý do anh chưa kịp viết.</p>
+  </section>
+
+  <section class="ending">
+    <span class="script" style="font-size:2rem">Anh yêu em</span>
+    <h2>Hẹn em ở <em>năm thứ hai</em>.</h2>
+    <p>Chúc mừng 20/10 và chúc mừng một năm của chúng mình.</p>
+    <button class="heart-btn" id="burst2" type="button">Thả thêm tim ♥</button>
+  </section>
+</main>
+
+<div class="lightbox" id="lb" hidden role="dialog" aria-modal="true" aria-label="Xem ảnh">
+  <button class="lb-close" id="lb-close" type="button">Đóng</button>
+  <figure><div id="lb-media"></div><figcaption id="lb-cap"></figcaption></figure>
+</div>
+
+<button class="music" id="music" type="button" aria-pressed="false"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Bật nhạc</span><span class="song">· Ngày Đầu Tiên</span></button>
+<audio id="bgm" src="img/ngay-dau-tien-ngan.mp3" loop preload="auto"></audio>
+
+<script>
+/* ===== Kỷ niệm. media: danh sách ảnh/video; để trống = thẻ viết tay. ===== */
+const P = "img/";
+const CHAPTERS = [
+  { id:"bat-dau", tag:"Chương 1", title:"Ngày <em>bắt đầu</em>", note:"Từ một trang web nhỏ đến một lời yêu.", items:[
+    { when:"20 · 10 · 2025", title:"Món quà 20/10 đầu tiên anh tặng em", text:"Một trang web anh tự làm, có hộp quà, có nhạc, có nút \"click nhiệt tình dô nhá\". Hông có gì nhiều, chỉ một chút ít sự cute thui. Năm nay anh làm lại, dài hơn một chút.", cap:"20/10 vui vẻ người đẹp", media:[{src:"01-web-20-10.jpg",pos:"top"}] },
+    { when:"Lần đầu", title:"Món quà đầu tiên em tặng anh", text:"Một bé mèo đen mắt tròn xoe, nhỏ vừa lòng bàn tay. Anh vẫn giữ kỹ, vì đó là lần đầu có người chuẩn bị quà cho anh bằng cả tấm lòng.", cap:"Bé mèo của em", media:[{src:"02-meo-den.jpg"}] },
+    { when:"14 · 11 · 2025", title:"Chính thức nói lời yêu", text:"Hội An, tranh treo kín tường, có chú đàn hát phía sau như nhạc nền phim. Từ hôm đó, anh có thêm một người để lo, để nhớ, để thương.", cap:"14/11", media:[{src:"03-14-11.jpg"}], key:true },
+    { when:"30 · 11 · 2025", title:"Sinh nhật đầu tiên của em bên anh", text:"Mũ gấu, băng đô tai mèo và một dải ảnh photobooth đầy trò. Anh mong năm nào cũng được là người thổi nến cùng em.", cap:"Sinh nhật em", media:[{src:"04-photobooth.jpg"}] }
+  ]},
+  { id:"hue", tag:"Chương 2", title:"Đà Nẵng <em>và</em> Huế", note:"Một con đèo ở giữa, và hai trái tim không chịu xa.", items:[
+    { when:"Lần đầu", title:"Lần đầu yêu xa", text:"Em ra Huế đi học, anh ở lại. Màn hình điện thoại thành chỗ hẹn hò, và khuôn mặt chu môi này là thứ anh chờ mỗi tối.", cap:"Yêu xa", media:[{src:"05-yeu-xa.jpg",pos:"center 30%"}] },
+    { when:"Lần đầu", title:"Anh ra Huế chơi với em", text:"Lần đầu anh được thấy thành phố em sống mỗi ngày. Huế về đêm, đèn đỏ hắt lên hai bàn tay đan chặt vào nhau.", cap:"Huế cùng em", media:[{src:"06-nam-tay-hue.jpg"}] },
+    { when:"Lần đầu", title:"Hai đứa cùng vượt đèo Hải Vân", text:"Em trùm mũ áo, anh quấn khăn, đứng trên tảng đá nhìn xuống biển xanh. Con đèo nối hai thành phố, cũng nối hai đứa mình.", cap:"Đèo Hải Vân", media:[{src:"07-hai-van.jpg"}] }
+  ]},
+  { id:"tet", tag:"Chương 3", title:"Mùa xuân <em>có nhau</em>", note:"Tết đầu tiên, Valentine đầu tiên.", items:[
+    { when:"Tết 2026", title:"Lần đầu đón Tết cùng nhau", text:"Em cầm bông hoa dại bên cánh đồng xanh, tay anh nắm tay em. Giao thừa năm nay khác hẳn mọi năm, vì người đầu tiên anh muốn chúc là em.", cap:"Tết đầu tiên", media:[{src:"08-tet.jpg"}] },
+    { when:"Tết 2026", title:"Lần đầu chụp ảnh Tết cùng nhau", text:"Áo dài hồng, phố vàng Hội An, câu đối \"Cát tường như ý\" sau lưng. Áo đẹp, hoa đẹp, nhưng anh chỉ nhìn em.", cap:"Cát tường như ý", media:[{src:"09-anh-tet.jpg"}] },
+    { when:"14 · 02 · 2026", title:"Valentine đầu tiên của hai đứa", text:"Một bó cẩm chướng hồng và chiếc túi nhỏ ghi \"Sweet Love\". Hoa hay quà đều không quan trọng bằng việc được ở cạnh em.", cap:"Sweet Love", media:[{src:"10-valentine.jpg"}] }
+  ]},
+  { id:"truong-thanh", tag:"Chương 4", title:"Vấp ngã <em>và trưởng thành</em>", note:"Thương nhau là ở lại khi mọi thứ chông chênh, và cùng nhau bước sang trang mới.", items:[
+    { when:"Một lần", title:"Lúc anh mất việc, em vẫn ở bên", text:"Đó là lúc anh thấy mình nhỏ bé nhất. Em không hỏi nhiều, chỉ kéo anh ra biển, tựa vai anh ngắm hoàng hôn rồi cười giữa những chiếc thuyền thúng. Anh sẽ không bao giờ quên.", cap:"Em vẫn ở đây", media:[{src:"11-hoang-hon.jpg"},{src:"11b-bien.jpg"}], key:true },
+    { when:"Ngày đáng nhớ", title:"Đón lễ tốt nghiệp đại học của em", text:"Bao năm đèn sách ở Huế, cuối cùng em cũng ôm bó hoa đứng dưới giàn hoa giấy. Anh đứng cạnh em, tự hào như chính mình tốt nghiệp.", cap:"Cử nhân của anh", media:[{src:"12-tot-nghiep.jpg"}], key:true },
+    { when:"Lần đầu", title:"Em đi làm xa nhà, thử sức với công việc mới", text:"Chiếc thẻ nhân viên đầu tiên có tên Lê Thị Minh Nguyệt. Em đã dũng cảm hơn anh nghĩ, và anh tự hào về em nhiều lắm.", cap:"Cô gái dũng cảm", media:[{src:"13-di-lam.jpg"}] },
+    { when:"Một tháng", title:"Lần đầu hai đứa sống chung", text:"Một tháng em đi làm xa, hai đứa cùng nấu ăn, cùng chờ nhau về. Anh được ngắm khuôn mặt mộc ngái ngủ này mỗi sáng, và anh đã thấy được tương lai mình muốn.", cap:"Nhà của hai đứa", media:[{src:"14-song-chung.jpg"}] }
+  ]},
+  { id:"di-cung-nhau", tag:"Chương 5", title:"Đi <em>cùng nhau</em>", note:"Những chuyến đi xa, một sinh nhật có em, và cả những lần lo cho nhau.", items:[
+    { when:"Lần đầu", title:"Chuyến đi xa đầu tiên: Vinpearl", text:"Kính đen, mũ cói, đèn sân khấu chói lóa và hai đứa tạo dáng như ngôi sao. Vui đến mức về rồi vẫn muốn đi tiếp.", cap:"Vinpearl", media:[{src:"15-vinpearl.jpg"}] },
+    { when:"19 · 07 · 2026", title:"Sinh nhật đầu tiên của anh có em", text:"Em đặt cho anh chiếc bánh có áo đấu số 25 in tên \"Hậu Đậu\", ăn cùng bữa thịt nướng. Món quà lớn nhất năm đó là em.", cap:"Happy Birthday Bae", media:[{src:"16-sinh-nhat-anh.jpg"}] },
+    { when:"Lần đầu", title:"Cùng nhau lên núi Thần Tài", text:"Hồ khoáng xanh, thác nước phun trắng xóa, và em ngồi bên lan can nắm tay anh. Một ngày thật nhẹ nhàng.", cap:"Núi Thần Tài", media:[{src:"17-than-tai.jpg"}] },
+    { when:"Một lần", title:"Trốn ba mẹ ra Huế healing", text:"Chuyến đi bí mật của hai đứa. Anh cõng em trên bãi cỏ, em ôm bó tulip. Hơi liều một chút, nhưng là một trong những kỷ niệm anh thích nhất.", cap:"Huế healing", media:[{src:"18-hue-healing.jpg"}] },
+    { when:"Một lần", title:"Cùng nhau đi tiêm HPV", text:"Không phải chuyến đi chơi, nhưng anh nhớ mãi. Em nhắm tịt mắt chờ mũi tiêm, còn anh ở ngay bên cạnh. Thương nhau là còn lo cho sức khỏe của nhau.", cap:"Em giỏi lắm", media:[{src:"19-hpv.mp4",poster:"19-hpv-poster.jpg",video:true}] }
+  ]}
+];
+/* Ảnh cuối của chương "Tròn một năm" — điền tên file khi có */
+const FINAL = { cap:"Một năm của chúng mình", media:[{src:"20-mot-nam.mp4",poster:"20-mot-nam-poster.jpg",video:true}] };
+
+/* ===== Render ===== */
+const tilts=[-3,2.2,-1.5,2.6,-2.2,1.6];
+const gallery=[]; /* mọi ảnh, cho dải phim và lightbox */
+function mediaEl(m,cap){
+  const i=gallery.push({...m,cap})-1;
+  const pos=m.pos?` style="object-position:${m.pos}"`:'';
+  const inner = m.video
+    ? `<video src="${P+m.src}" poster="${P+m.poster}" muted loop playsinline autoplay preload="metadata"${pos}></video><span class="play">▶ Chạm để xem có tiếng</span>`
+    : `<img src="${P+m.src}" alt="${cap}" loading="lazy"${pos}>`;
+  return `<button class="photo" type="button" data-i="${i}" aria-label="Phóng to: ${cap}">${inner}</button>`;
+}
+function stack(item,k){
+  const ms=item.media||[];
+  if(!ms.length) return `<div class="stack"><figure class="polaroid" style="--r:${tilts[k%6]}deg"><div class="photo empty">Tấm ảnh này<br>anh giữ trong tim</div><figcaption>${item.cap}</figcaption></figure></div>`;
+  let h=`<div class="stack${ms.length>1?' two':''}"><figure class="polaroid" style="--r:${tilts[k%6]}deg">${mediaEl(ms[0],item.cap)}<figcaption>${item.cap}</figcaption></figure>`;
+  if(ms[1]) h+=`<figure class="polaroid extra" style="--r:${-tilts[k%6]*1.6}deg">${mediaEl(ms[1],item.cap)}</figure>`;
+  return h+`</div>`;
+}
+const toc=document.getElementById('toc'), wrap=document.getElementById('chapters');
+let k=0;
+CHAPTERS.forEach(ch=>{
+  toc.insertAdjacentHTML('beforeend',`<a href="#${ch.id}">${ch.tag}</a>`);
+  const moments=ch.items.map(it=>`<article class="moment${it.key?' key':''}">${stack(it,k++)}<div class="txt"><span class="when">${it.when}</span><h3>${it.title}</h3><p>${it.text}</p></div></article>`).join('');
+  wrap.insertAdjacentHTML('beforeend',`<section class="chapter" id="${ch.id}"><div class="chapter-head"><span class="eyebrow">${ch.tag}</span><h2>${ch.title}</h2><p>${ch.note}</p></div><div>${moments}</div></section>`);
+});
+toc.insertAdjacentHTML('beforeend',`<a href="#mot-nam">Tròn 1 năm</a>`);
+document.getElementById('final-photo').outerHTML = FINAL.media.length
+  ? stack(FINAL,1)
+  : `<div class="stack"><figure class="polaroid" style="--r:2deg"><div class="photo empty">Một năm<br>của chúng mình</div><figcaption>${FINAL.cap}</figcaption></figure></div>`;
+
+/* Dải phim: lặp hai lần để chạy vòng */
+const film=document.getElementById('film');
+const stills=gallery.map((g,i)=>({...g,i})).filter(g=>!g.video);
+const filmHTML=stills.map(g=>`<button type="button" data-i="${g.i}" aria-label="Phóng to: ${g.cap}"><img src="${P+g.src}" alt="" loading="lazy"${g.pos?` style="object-position:${g.pos}"`:''}></button>`).join('');
+film.innerHTML=filmHTML+filmHTML;
+
+/* Lightbox */
+const lb=document.getElementById('lb'), lbm=document.getElementById('lb-media'), lbc=document.getElementById('lb-cap');
+let lastFocus=null;
+function openLB(i){
+  const g=gallery[i]; lastFocus=document.activeElement;
+  lbm.innerHTML = g.video ? `<video src="${P+g.src}" poster="${P+g.poster}" controls autoplay playsinline></video>` : `<img src="${P+g.src}" alt="${g.cap}">`;
+  lbc.textContent=g.cap; lb.hidden=false; document.getElementById('lb-close').focus();
+  if(g.video) duck();
+}
+function closeLB(){ lb.hidden=true; lbm.innerHTML=''; unduck(); if(lastFocus) lastFocus.focus(); }
+
+/* Nhạc nền: Ngày Đầu Tiên */
+const bgm=document.getElementById('bgm'), mBtn=document.getElementById('music'), mLabel=document.getElementById('music-label');
+const VOL=.7; let userMuted=false, ducked=false, fadeT=null;
+bgm.volume=VOL;
+function setUI(on){ mBtn.classList.toggle('on',on); mBtn.setAttribute('aria-pressed',String(on)); mLabel.textContent=on?'Tắt nhạc':'Bật nhạc'; }
+function fadeTo(v,done){ clearInterval(fadeT); let n=0; fadeT=setInterval(()=>{ const d=v-bgm.volume; if(Math.abs(d)<.04||++n>30){bgm.volume=v;clearInterval(fadeT);done&&done();} else bgm.volume=Math.min(1,Math.max(0,bgm.volume+Math.sign(d)*.04)); },40); }
+function play(){ bgm.volume=0; const p=bgm.play(); if(p&&p.then) p.then(()=>{setUI(true);fadeTo(VOL)}).catch(()=>setUI(false)); else {setUI(true);fadeTo(VOL)} }
+function stop(){ setUI(false); fadeTo(0,()=>bgm.pause()); }
+mBtn.addEventListener('click',e=>{ e.stopPropagation(); if(bgm.paused||!mBtn.classList.contains('on')){userMuted=false;play()} else {userMuted=true;stop()} });
+/* Lần chạm đầu tiên vào trang sẽ bật nhạc (trình duyệt không cho tự phát) */
+function firstTouch(e){ if(e.target.closest('#music')) return; removeEventListener('pointerdown',firstTouch); if(!userMuted&&bgm.paused&&!ducked) play(); }
+addEventListener('pointerdown',firstTouch);
+function duck(){ if(!bgm.paused){ ducked=true; fadeTo(0,()=>bgm.pause()); } }
+function unduck(){ if(ducked){ ducked=false; if(!userMuted) play(); } }
+document.addEventListener('click',e=>{const b=e.target.closest('[data-i]'); if(b) openLB(+b.dataset.i);});
+document.getElementById('lb-close').addEventListener('click',closeLB);
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!lb.hidden) closeLB(); });
+
+/* Đồng hồ */
+const pad=n=>String(n).padStart(2,'0');
+function fill(start,sfx){
+  let diff=Math.max(0,Date.now()-start.getTime());
+  const d=Math.floor(diff/864e5); diff-=d*864e5;
+  const h=Math.floor(diff/36e5); diff-=h*36e5;
+  const m=Math.floor(diff/6e4); diff-=m*6e4;
+  document.getElementById('d'+sfx).textContent=d;
+  document.getElementById('h'+sfx).textContent=pad(h);
+  document.getElementById('m'+sfx).textContent=pad(m);
+  document.getElementById('s'+sfx).textContent=pad(Math.floor(diff/1e3));
+  return d;
+}
+const START1=new Date(2025,9,20), START2=new Date(2025,10,14);
+function tick(){ document.getElementById('d3').textContent=fill(START1,'1'); fill(START2,'2'); }
+tick(); setInterval(tick,1000);
+
+/* Lý do */
+const reasons=[
+  ["Nụ cười của em","Em cười là anh quên luôn mình đang mệt."],
+  ["Em ở lại khi anh khó khăn nhất","Lúc anh mất việc, em vẫn nắm tay anh."],
+  ["Em dũng cảm","Dám xa nhà, dám thử sức, dám nhắm mắt chịu cả mũi tiêm."],
+  ["Em làm anh muốn tốt hơn","Ở cạnh em, anh muốn cố gắng nhiều hơn mỗi ngày."],
+  ["Những chuyến đi cùng em","Hải Vân, Huế, Hội An, Vinpearl, đi đâu có em cũng vui."],
+  ["Vì đó là em","Không cần thêm lý do nào nữa."]
+];
+const box=document.getElementById('reasons');
+reasons.forEach(([f,b],i)=>{
+  const el=document.createElement('button');
+  el.type='button'; el.className='reason'; el.setAttribute('aria-pressed','false');
+  el.innerHTML=`<span class="n">Lý do ${i+1}</span><span class="front">${f}</span><span class="back" hidden>${b}</span>`;
+  el.addEventListener('click',()=>{
+    const open=el.getAttribute('aria-pressed')==='true';
+    el.setAttribute('aria-pressed',String(!open));
+    el.querySelector('.back').hidden=open;
+    if(!open){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+20,14)}
+  });
+  box.appendChild(el);
+});
+
+/* Cánh hoa và tim */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=document.getElementById('petals'), ctx=cv.getContext('2d');
+let W,H,dpr; function size(){dpr=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+size(); addEventListener('resize',size);
+const petals=Array.from({length:reduce?0:22},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:5+Math.random()*7,vy:.3+Math.random()*.6,vx:-.3+Math.random()*.6,a:Math.random()*6.28,va:-.02+Math.random()*.04}));
+let hearts=[];
+function burst(x,y,n=28){ if(reduce) n=Math.min(n,8);
+  for(let i=0;i<n;i++){const ang=Math.random()*6.28,sp=2+Math.random()*5;hearts.push({x,y,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp-3,s:8+Math.random()*10,life:1,c:Math.random()<.5?'#f39bb3':'#e8c483'})}}
+function heart(x,y,s,c,al){ctx.save();ctx.globalAlpha=al;ctx.fillStyle=c;ctx.translate(x,y);ctx.beginPath();ctx.moveTo(0,s*.3);ctx.bezierCurveTo(0,0,-s*.5,0,-s*.5,s*.3);ctx.bezierCurveTo(-s*.5,s*.6,0,s*.8,0,s);ctx.bezierCurveTo(0,s*.8,s*.5,s*.6,s*.5,s*.3);ctx.bezierCurveTo(s*.5,0,0,0,0,s*.3);ctx.fill();ctx.restore()}
+function frame(){
+  ctx.clearRect(0,0,W,H);
+  for(const p of petals){p.y+=p.vy;p.x+=p.vx+Math.sin(p.a)*.3;p.a+=p.va;if(p.y>H+20){p.y=-20;p.x=Math.random()*W}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=.5;ctx.fillStyle='#f39bb3';ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*.55,0,0,6.28);ctx.fill();ctx.restore()}
+  hearts=hearts.filter(h=>h.life>0);
+  for(const h of hearts){h.x+=h.vx;h.y+=h.vy;h.vy+=.12;h.life-=.012;heart(h.x,h.y,h.s,h.c,Math.max(0,h.life))}
+  requestAnimationFrame(frame);
+}
+frame();
+['burst','burst2'].forEach(id=>document.getElementById(id).addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();burst(r.left+r.width/2,r.top)}));
+</script>
+
+</body>
+</html>
